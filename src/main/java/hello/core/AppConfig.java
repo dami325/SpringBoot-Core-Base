@@ -7,6 +7,8 @@ import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  *  AppConfig 리팩터링
@@ -21,22 +23,34 @@ import hello.core.member.MemoryMemberRepository;
  * 구성 영역(AppConfig)는 당연히 변경된다. 구성 역할을 담당하는 AppConfig를 애플리케이션이라는 공연의 기획자로 생각하자.
  * 공연 기획자는 공연 참여자인 구현 객체들을 모두 알아야 한다.
  */
+
+/**
+ * 스프링 컨테이너에 객체를 스프링 빈으로 등록하고, 스프링 컨테이너에서 스프링 빈을 찾아서 사용하도록 변경
+ * @Configuration 이 붙은 AppConfig 를 설정(구성) 정보로 사용함
+ * @Bean 이라 적힌 메서드를 모두 호출해서 반환된 객체를 스프링 컨테이너에 등록, 이렇게 스프링 컨테이너에 등록된 객체를 스프링 빈이라 함
+ * applicationContext.getBean() 메서드를 사용해 찾을 수 있음
+ */
+@Configuration
 public class AppConfig {
 
+    @Bean
     public MemberService memberService() {
         return new MemberServiceImpl(memberRepository());
     }
 
-    private MemoryMemberRepository memberRepository() {
+    @Bean
+    public MemoryMemberRepository memberRepository() {
         // 차후에 메모리가 DB로 바뀌어도 이 코드만 바꾸면됨
         return new MemoryMemberRepository();
     }
 
+    @Bean
     public OrderService orderService() {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
     // 할인 정책
+    @Bean
     public DiscountPolicy discountPolicy() {
 //        return new FixDiscountPolicy();
         return new RateDiscountPolicy();
