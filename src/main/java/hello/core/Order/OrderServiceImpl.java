@@ -28,22 +28,24 @@ import org.springframework.stereotype.Component;
     @Autowired private  MemberRepository memberRepository; // 맴버 정보 리파지토리
     @Autowired private  DiscountPolicy discountPolicy; // 인터페이스에만 의존하도록 코드를 변경
 
+
+    일반 메서드 주입 (한번에 여러 필드를 주입 받을 수 있다. 일반적으로 잘 사용하지 않는다)
+     @Autowired
+     public void init(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+     this.memberRepository = memberRepository;
+     this.discountPolicy = discountPolicy;
+     }
  */
 
 
 @Component
 public class OrderServiceImpl implements OrderService {
 
-    private  MemberRepository memberRepository; // 맴버 정보 리파지토리
-    private  DiscountPolicy discountPolicy; // 인터페이스에만 의존하도록 코드를 변경
+    private final MemberRepository memberRepository; // 맴버 정보 리파지토리
+    private final DiscountPolicy discountPolicy; // 인터페이스에만 의존하도록 코드를 변경
 
 
-    // 일반 메서드 주입 (한번에 여러 필드를 주입 받을 수 있다. 일반적으로 잘 사용하지 않는다)
-    @Autowired
-    public void init(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
+
 
 
     // 생성자가 딱 1개만 있으면 @Autowired 생략 가능 (스프링 빈에만 해당)

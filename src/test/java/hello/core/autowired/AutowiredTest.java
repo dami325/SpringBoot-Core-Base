@@ -30,6 +30,8 @@ public class AutowiredTest {
          * @Nullable = 없으면 null 출력
          * Optional<Member> 없으면 Optional.empty 출력
          */
+
+
         @Autowired
         public void setNoBean2(@Nullable Member noBean1) {
             System.out.println("noBean2 = " + noBean1);
