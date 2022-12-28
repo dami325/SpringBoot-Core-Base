@@ -40,17 +40,17 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final MemberRepository memberRepository; // 맴버 정보 리파지토리
     private final DiscountPolicy discountPolicy; // 인터페이스에만 의존하도록 코드를 변경
 
-//    // 생성자가 딱 1개만 있으면 @Autowired 생략 가능 (스프링 빈에만 해당)
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    // 생성자가 딱 1개만 있으면 @Autowired 생략 가능 (스프링 빈에만 해당)
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
