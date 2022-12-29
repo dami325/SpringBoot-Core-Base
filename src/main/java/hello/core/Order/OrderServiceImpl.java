@@ -1,5 +1,6 @@
 package hello.core.Order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
@@ -48,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
 
     // 생성자가 딱 1개만 있으면 @Autowired 생략 가능 (스프링 빈에만 해당)
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
